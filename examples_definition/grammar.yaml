@@ -1,0 +1,17 @@
+#
+#
+axioms:
+    - I
+    - you
+    - he
+    - verb:do
+    - verb:make
+
+rules:
+    - X is .+, I   and verb:Xo => I_Xo
+    - X is .+, you and verb:Xo => you_Xo
+    - X is .+, he  and verb:Xo => he_Xoes
+    - X is .+, I   and verb:Xe => I_Xe
+    - X is .+, you and verb:Xe => you_Xe
+    - X is .+, he  and verb:Xe => he_Xes
+

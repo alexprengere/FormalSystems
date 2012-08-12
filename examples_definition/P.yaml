@@ -1,0 +1,11 @@
+#
+#
+axioms:
+    - x y are -+, xyNDPx
+    - P--
+
+rules:
+    - x y are -+, xNDPy => xNDPxy
+    - z is -+, --NDPz => zSD--
+    - x z are -+, zSDx and x-NDPz => zSDx-
+    - z is -+, z-SDz => Pz-

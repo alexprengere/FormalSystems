@@ -1,0 +1,7 @@
+#
+#
+axioms:
+    - x is -+, xf-gx
+
+rules:
+    - x y z are -+, xfygz => xfy-gzx

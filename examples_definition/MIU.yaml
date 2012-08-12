@@ -1,0 +1,11 @@
+#
+#
+axioms:
+    - MI
+
+rules:
+    #- MI => ZZ
+    - x is .*, xI => xIU
+    - x is .*, Mx => Mxx
+    - x is .*, y is .*, xIIIy => xUy
+    - x y  .* , xUUy => xy
