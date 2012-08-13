@@ -9,7 +9,6 @@ setup(
     description='Play with formal systems from "Gödel Escher Bach", Douglas Hofstadter',
     author='Alex Prengère',
     author_email='alex.prengere@gmail.com',
-    # Put git repo url
     url='https://github.com/alexprengere/FormalSystems',
     packages=[
         'formalsystems', 

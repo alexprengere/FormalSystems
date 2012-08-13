@@ -348,13 +348,13 @@ class Rule(object):
 
     def display_prod(self, t_ths, nth):
 
-        print 'P\t%-40s\tfor\t%-25s\tgives\t%s' % \
+        print 'P  %-40s  for  %-25s  gives  %s' % \
                 (self, ' and '.join(str(t) for t in t_ths), nth)
 
 
     def display_unprod(self, t_ths):
 
-        print '.\t%-40s\tfor\t%-25s' % \
+        print '.  %-40s  for  %-25s' % \
                 (self, ' and '.join(str(t) for t in t_ths))
 
 
@@ -625,10 +625,10 @@ class FormalSystem(object):
         if verbose:
             for gen, p in report:
                 if p.parents:
-                    print '[%-2s]\t%-40s\tfor\t%-25s\tgives\t%-20s' % \
+                    print '[%-2s]  %-40s  for  %-25s  gives  %-20s' % \
                             (f_gen - gen, p.p_rule, ' and '.join(str(t) for t in p.parents), p)
                 else:
-                    print '[%-2s]\t%-40s\t   \t%-25s\tgives\t%-20s' % \
+                    print '[%-2s]  %-40s       %-25s  gives  %-20s' % \
                             (f_gen - gen, p.p_rule, '', p)
 
         return report

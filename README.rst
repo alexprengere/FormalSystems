@@ -10,7 +10,7 @@ Formal systems
 ==============
 
 You may define your own formal systems using a quite simple syntax, close to free text.
-Examples for *MIU*, *pg*, *fg* and *NDP* formal systems from the book are implemented in *examples_definition*.
+Examples for *MIU*, *pg*, *fg* and *NDP* formal systems from the book are implemented in directory *definitions*.
 
 Example
 -------
@@ -38,7 +38,7 @@ The underlying syntax is YAML (see raw format). You can define one or several ax
 Syntax
 ------
 
-Axiom definitions should be formatted like this (*[]* means optinality):
+Axiom definitions should be formatted like this (*[]* means this is optional)::
 
     [def_1, [def_2, ...]] expr
 
@@ -49,7 +49,7 @@ Where:
       The definitions are written using "char [is] regexp" or "char1 char2 [are] regexp" if different wildcards have the same definition. Note that you will only use *one character* for wildcard definition.
     - *expr* is the axiom expression
 
-Rules for theorem production should be formatted like this: 
+Rules for theorem production should be formatted like this::
 
     [def_1, [def_2, ...]] cond_1 [and cond_2 [and ...]] => th_1 [and th_2 [and ...]]
 
@@ -64,22 +64,22 @@ Installation
 ============
 
 
-Install with:
+Install with::
 
-    `python setup.py install --user`
+    % python setup.py install --user
 
 A script should be put in ~/.local/bin, make sure this path is in your $PATH::
 
-    `export PATH=$PATH:~/.local/bin`
+    % export PATH=$PATH:~/.local/bin
 
 
 Tests
 =====
 
-If installation is successful, run the tests with:
+If installation is successful, run the tests with::
 
-    `% cd tests`
-    `% python test_formalsystems.py -v`
+    % cd tests
+    % python test_formalsystems.py -v
 
 
 Main script
@@ -90,9 +90,73 @@ If it is not the case, you can always call the script directly, assuming the dep
 
 Usage of the main script is fully documented in *--help* argument. 
 
-You may generate theorems step by step if the number of axioms is finite, or using a bucket where axioms are thrown and theorems computed iteratively otherwise.
+You may generate theorems step by step if the number of axioms is finite::
 
-Options are available to display theorem derivation as well.
+    % FormalSystems definitions/MIU.yaml -i 3 
+    > Finite number of axioms, using step algorithm
+
+    STEP 1: MI
+
+    P  (1) x is .*, xI => xIU                    for  MI                         gives  MIU
+    P  (2) x is .*, Mx => Mxx                    for  MI                         gives  MII
+    .  (3) x is .*, y is .*, xIIIy => xUy        for  MI                       
+    .  (4) x y  .* , xUUy => xy                  for  MI                       
+
+    STEP 2: MIU/MII
+
+    P  (1) x is .*, xI => xIU                    for  MII                        gives  MIIU
+    .  (1) x is .*, xI => xIU                    for  MIU                      
+    P  (2) x is .*, Mx => Mxx                    for  MII                        gives  MIIII
+    P  (2) x is .*, Mx => Mxx                    for  MIU                        gives  MIUIU
+    .  (3) x is .*, y is .*, xIIIy => xUy        for  MII                      
+    .  (3) x is .*, y is .*, xIIIy => xUy        for  MIU                      
+    .  (4) x y  .* , xUUy => xy                  for  MII                      
+    .  (4) x y  .* , xUUy => xy                  for  MIU                      
+
+    STEP 3: MIIU/MIIII/MIUIU
+
+Or using a bucket where axioms are thrown and theorems computed iteratively if the number of axioms is infinite::
+
+    % FormalSystems definitions/pg.yaml -i 4
+    > Infinite number of axioms, using bucket algorithm
+    [Adding -p-g-- to bucket]
+
+    === BUCKET 1: -p-g--
+
+    P  (1) x y z are -+, xpygz => xpy-gz-        for  -p-g--                     gives  -p--g---
+    [Adding --p-g--- to bucket]
+
+    === BUCKET 2: -p--g---/--p-g---
+
+    P  (1) x y z are -+, xpygz => xpy-gz-        for  -p--g---                   gives  -p---g----
+    P  (1) x y z are -+, xpygz => xpy-gz-        for  --p-g---                   gives  --p--g----
+    [Adding ---p-g---- to bucket]
+
+    === BUCKET 3: -p---g----/--p--g----/---p-g----
+
+    P  (1) x y z are -+, xpygz => xpy-gz-        for  -p---g----                 gives  -p----g-----
+    P  (1) x y z are -+, xpygz => xpy-gz-        for  ---p-g----                 gives  ---p--g-----
+    P  (1) x y z are -+, xpygz => xpy-gz-        for  --p--g----                 gives  --p---g-----
+    [Adding ----p-g----- to bucket]
+
+    === BUCKET 4: -p----g-----/---p--g-----/--p---g-----/----p-g-----
+
+Options are available to display theorem derivation as well::
+
+    % FormalSystems definitions/NDP.yaml -d P----- 
+
+    === Theorem P----- found, derivation:
+    [1 ]  Axiom                                                                     gives  --NDP-              
+    [2 ]  (1) x y are -+, xNDPy => xNDPxy           for  --NDP-                     gives  --NDP---            
+    [3 ]  Axiom                                                                     gives  ---NDP--            
+    [3 ]  (1) x y are -+, xNDPy => xNDPxy           for  --NDP---                   gives  --NDP-----          
+    [4 ]  Axiom                                                                     gives  ----NDP-            
+    [4 ]  (1) x y are -+, xNDPy => xNDPxy           for  ---NDP--                   gives  ---NDP-----         
+    [4 ]  (2) z is -+, --NDPz => zSD--              for  --NDP-----                 gives  -----SD--           
+    [5 ]  (1) x y are -+, xNDPy => xNDPxy           for  ----NDP-                   gives  ----NDP-----        
+    [5 ]  (3) x z are -+, zSDx and x-NDPz => zSDx-  for  -----SD-- and ---NDP-----  gives  -----SD---          
+    [6 ]  (3) x z are -+, zSDx and x-NDPz => zSDx-  for  -----SD--- and ----NDP-----  gives  -----SD----         
+    [7 ]  (4) z is -+, z-SDz => Pz-                 for  -----SD----                gives  P-----  
 
 
 Python API
@@ -105,7 +169,7 @@ Some tests using *doctests*::
 MIU formal system::
 
     >>> fs = FormalSystem()
-    >>> fs.read_formal_system('../examples_definition/MIU.yaml')
+    >>> fs.read_formal_system('../definitions/MIU.yaml')
     >>> axioms = list(fs.iterate_over_schema())
     >>> print ' - '.join(str(a) for a in axioms)
     MI
@@ -122,7 +186,7 @@ MIU formal system::
 pg formal system::
 
     >>> fs = FormalSystem()
-    >>> fs.read_formal_system('../examples_definition/pg.yaml')
+    >>> fs.read_formal_system('../definitions/pg.yaml')
     >>> r = fs.apply_rules_bucket_till(fs.iterate_over_schema(), max_turns=4, verbose=False)
     >>> for th in r:
     ...     print th
@@ -140,7 +204,7 @@ pg formal system::
 P formal system::
 
     >>> fs = FormalSystem()
-    >>> fs.read_formal_system('../examples_definition/P.yaml')
+    >>> fs.read_formal_system('../definitions/NDP.yaml')
     >>> r = fs.apply_rules_bucket_till(fs.iterate_over_schema(), max_turns=2, full=True, verbose=False)
     >>> for th in r:
     ...     print th
@@ -151,7 +215,7 @@ P formal system::
 Derivations::
 
     >>> fs = FormalSystem()
-    >>> fs.read_formal_system('../examples_definition/P.yaml')
+    >>> fs.read_formal_system('../definitions/NDP.yaml')
     >>> r = fs.derivation_asc(fs.iterate_over_schema(), Theorem('P-----'), full=True, max_turns=10, verbose=True)
     <BLANKLINE>
     ...
@@ -161,7 +225,7 @@ Derivations::
 Derivations::
 
     >>> fs = FormalSystem()
-    >>> fs.read_formal_system('../examples_definition/MIU.yaml')
+    >>> fs.read_formal_system('../definitions/MIU.yaml')
     >>> r = fs.derivation_step(fs.iterate_over_schema(), Theorem('MIUIU'), step=5, verbose=True)
     <BLANKLINE>
     ...

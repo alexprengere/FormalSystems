@@ -27,6 +27,9 @@ class TestFormalSystems(unittest.TestCase):
 
 if __name__ == '__main__':
 
+    # Going in tests directory
+    os.chdir(DIRNAME)
+
     flags = (
         doctest.ELLIPSIS |
         doctest.NORMALIZE_WHITESPACE
@@ -39,7 +42,7 @@ if __name__ == '__main__':
     tests.addTests(unittest.makeSuite(TestFormalSystems))
     tests.addTests(doctest.DocTestSuite(formalsystems))
     tests.addTests(doctest.DocTestSuite(leplparsing))
-    tests.addTests(doctest.DocFileSuite('../README.rst', optionflags=flags)) # relative to __file__
+    tests.addTests(doctest.DocFileSuite('../README.rst', module_relative=False, optionflags=flags)) 
 
     # Test runner
     verbosity = 0
