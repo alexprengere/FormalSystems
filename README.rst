@@ -44,6 +44,7 @@ Axiom definitions should be formatted like this (*[]* means this is optional)::
 
 Where:
   - *def_i* is an optional definition of "wildcard", using a regular expression, for example:
+
     - ".*" may be anything including the empty string
     - "-+" is a string composed of "-"
     The definitions are written using ``char [is] regexp`` or ``char1 char2 [are] regexp`` if different wildcards have the same definition. Note that you should use only *one character* for wildcard definition.
@@ -54,7 +55,7 @@ Rules for theorem production should be formatted like this::
     [def_1, [def_2, ...]] cond_1 [and cond_2 [and ...]] => th_1 [and th_2 [and ...]]
 
 Where:
-  - *def_i* is the `same` as before
+  - *def_i* is the same as before
   - *cond_i* is a required theorem, in order to produce new theorems (separated by *and* if several conditions)
   - *th_i* is a produced theorems with the rule
 
