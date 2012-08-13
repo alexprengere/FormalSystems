@@ -10,7 +10,7 @@ setup(
     author='Alex Prengère',
     author_email='alex.prengere@gmail.com',
     # Put git repo url
-    url='http://some.github.url/',
+    url='https://github.com/alexprengere/FormalSystems',
     packages=[
         'formalsystems', 
     ],
