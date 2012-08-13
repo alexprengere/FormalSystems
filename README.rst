@@ -5,6 +5,8 @@ FormalSystems
 
 A Python implementation of Douglas Hofstadter formal systems, from his book "Gödel, Escher, Bach".
 
+.. contents::
+
 
 Formal systems
 ==============
@@ -12,8 +14,8 @@ Formal systems
 You may define your own formal systems using a quite simple syntax, close to free text.
 Examples for *MIU*, *pg*, *fg* and *NDP* formal systems from the book are implemented in directory *definitions*.
 
-Example
--------
+Examples
+--------
 
 The *MIU* system may be define with:
 
@@ -93,7 +95,7 @@ Usage of the main script is fully documented in *--help* argument.
 
 You may generate theorems step by step if the number of axioms is finite::
 
-    % FormalSystems definitions/MIU.yaml -i 3 
+    % FormalSystems definitions/MIU.yaml --iteration 3 
     > Finite number of axioms, using step algorithm
 
     STEP 1: MI
@@ -118,8 +120,9 @@ You may generate theorems step by step if the number of axioms is finite::
 
 Or using a bucket where axioms are thrown and theorems computed iteratively if the number of axioms is infinite::
 
-    % FormalSystems definitions/pg.yaml -i 4
+    % FormalSystems definitions/pg.yaml --iteration 4
     > Infinite number of axioms, using bucket algorithm
+
     [Adding -p-g-- to bucket]
 
     === BUCKET 1: -p-g--
@@ -144,7 +147,19 @@ Or using a bucket where axioms are thrown and theorems computed iteratively if t
 
 Options are available to display theorem derivation as well::
 
-    % FormalSystems definitions/NDP.yaml -d P----- 
+    % FormalSystems definitions/NDP.yaml --quiet --derivation P-----
+    > Infinite number of axioms, using bucket algorithm
+    > Rule with several parents, using recursivity
+
+    === BUCKET 1: --NDP-
+    === BUCKET 2: --NDP---/-SD--/P--
+    === BUCKET 3: --NDP-----/---SD--/---NDP--
+    === BUCKET 4: --NDP-------/---NDP-----/-----SD--/P---/---NDP-
+    === BUCKET 5: --NDP---------/---NDP--------/---NDP----/-------SD--/-----SD---/-SD---/----NDP---
+    === BUCKET 6: ---NDP-----------/----NDP-------/---NDP-------/--NDP-----------/---------SD--/----NDP-
+    === BUCKET 7: ----NDP-----------/----NDP-----/---NDP----------/---NDP--------------/--NDP-------------/-----------SD--/-------SD---/-SD----/----NDP--
+    === BUCKET 8: ----NDP---------/----NDP---------------/---NDP-------------/---NDP-----------------/--NDP---------------/----NDP------/-------------SD--/-------SD----/-----SD----/-----------SD---/-----NDP-
+    === BUCKET 9: --NDP-----------------/-----NDP------/----NDP-------------/---NDP--------------------/---NDP----------------/----NDP----------/----NDP-------------------/---------------SD--/-SD-----/-------------SD---/-----------SD----/P-----/-----NDP--
 
     === Theorem P----- found, derivation:
     [1 ]  Axiom                                                                     gives  --NDP-              
@@ -157,7 +172,7 @@ Options are available to display theorem derivation as well::
     [5 ]  (1) x y are -+, xNDPy => xNDPxy           for  ----NDP-                   gives  ----NDP-----        
     [5 ]  (3) x z are -+, zSDx and x-NDPz => zSDx-  for  -----SD-- and ---NDP-----  gives  -----SD---          
     [6 ]  (3) x z are -+, zSDx and x-NDPz => zSDx-  for  -----SD--- and ----NDP-----  gives  -----SD----         
-    [7 ]  (4) z is -+, z-SDz => Pz-                 for  -----SD----                gives  P-----  
+    [7 ]  (4) z is -+, z-SDz => Pz-                 for  -----SD----                gives  P-----
 
 
 Python API

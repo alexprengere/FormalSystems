@@ -26,6 +26,7 @@ def main():
 
     parser.add_argument('-s', '--schema', 
                         action='store_true',
+                        default=None,
                         help='iteration over axioms schema')
 
     parser.add_argument('-a', '--axiom', 
@@ -37,7 +38,7 @@ def main():
     parser.add_argument('-i', '--iteration', 
                         type=int,
                         default=10,
-                        help='define max iteration')
+                        help='define max iteration (default 10)')
 
     parser.add_argument('-q', '--quiet', 
                         action='store_true',
@@ -55,48 +56,53 @@ def main():
     infinite_axioms = any(map(has_wildcards,  fs.axioms))
     and_in_rule     = any(map(has_multi_rule, fs.rules))
 
-    if args.schema:
+    if args.schema is not None:
         print '> Generating axioms schema'
 
         for ax in fs.iterate_over_schema(max=args.iteration):
             print ax
         exit()
 
-    if args.axiom:
+    if args.axiom is not None:
         fs.is_axiom(args.axiom, verbose=not(args.quiet))
         exit()
 
 
     if infinite_axioms:
         print '> Infinite number of axioms, using bucket algorithm'
+    else:
+        print '> Finite number of axioms, using step algorithm'
 
-        if and_in_rule:
-            print '> Rule with several parents, using recursivity'
+    if and_in_rule:
+        print '> Rule with several parents, using recursivity'
+    print
 
-        if args.theorem is None:
+    # Main
+    if args.theorem is None:
+
+        if infinite_axioms:
             fs.apply_rules_bucket_till(fs.iterate_over_schema(), 
                                        min_len=None, # wont apply 
                                        max_turns=args.iteration, 
                                        full=and_in_rule,
                                        verbose=not(args.quiet))
         else:
+            ths = fs.apply_rules_step(fs.iterate_over_schema(), 
+                                      step=args.iteration,
+                                      verbose=not(args.quiet))
+    else:
+        if infinite_axioms:
             fs.derivation_asc(fs.iterate_over_schema(), 
                               args.theorem, 
                               max_turns=args.iteration, 
                               full=and_in_rule,
                               verbose=not(args.quiet))
-    else:
-        print '> Finite number of axioms, using step algorithm'
-
-        if args.theorem is None:
-            ths = fs.apply_rules_step(fs.iterate_over_schema(), 
-                                      step=args.iteration,
-                                      verbose=not(args.quiet))
         else:
             fs.derivation_step(fs.iterate_over_schema(),
                                args.theorem, 
                                step=args.iteration,
                                verbose=not(args.quiet))
+
 
 if __name__ == '__main__':
     main()

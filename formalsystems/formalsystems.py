@@ -476,7 +476,14 @@ class FormalSystem(object):
 
         for i in it.count(2):
 
+            if verbose:
+                print
+
             current = OrderedSet(self.apply_rules(current, verbose=verbose))
+
+            if verbose:
+                print
+
             yield i, current
 
 
@@ -484,8 +491,7 @@ class FormalSystem(object):
 
         for i, ths in self._apply_rules_step(ths, verbose):
 
-            if verbose:
-                print '\nSTEP %s: %s\n' % (i, '/'.join(str(b) for b in ths))
+            print 'STEP %s: %s' % (i, '/'.join(str(b) for b in ths))
 
             if i >= step:
                 break
@@ -497,28 +503,31 @@ class FormalSystem(object):
 
         for i, ths in self._apply_rules_step(axioms, verbose):
 
-            if verbose:
-                print '\nSTEP %s: %s\n' % (i, '/'.join(str(b) for b in ths))
+            print 'STEP %s: %s' % (i, '/'.join(str(b) for b in ths))
 
             if th in ths or i >= step:
                 break
 
-        return self.th_to_derivation(th, extract_from(th, ths), verbose)
+        return self.th_to_derivation(th, extract_from(th, ths), verbose=True)
 
 
     def _apply_rules_bucket(self, ths, full=False, verbose=True):
 
-        bucket = OrderedSet()
+        bucket     = OrderedSet()
         old_bucket = OrderedSet()
 
         for turn, ax in enumerate(ths, start=1):
 
             if verbose:
                 print '[Adding %s to bucket]' % ax
+                print
 
             bucket.add(ax)
             #print bucket
             yield turn, bucket
+
+            if verbose:
+                print
 
             # All permutations of bucket + old_bucket will be computed,
             # minus the permutations of old_bucket
@@ -553,8 +562,8 @@ class FormalSystem(object):
 
         for turn, bucket in bucket_gen:
 
-            if verbose:
-                print '\n=== BUCKET %s: %s\n' % (turn, '/'.join(str(b) for b in bucket))
+            print '=== BUCKET %s: %s' % \
+                    (turn, '/'.join(str(b) for b in bucket))
 
             # We stop if we processed all axioms shorter than min_len
             # And all their "childs" are longer than min_len after some iteration
@@ -579,14 +588,13 @@ class FormalSystem(object):
 
         for turn, bucket in bucket_gen:
 
-            if verbose:
-                print '\n=== BUCKET %s: %s\n' % \
-                        (turn, '/'.join(str(b) for b in bucket))
+            print '=== BUCKET %s: %s' % \
+                    (turn, '/'.join(str(b) for b in bucket))
 
             if th in bucket or turn >= max_turns:
                 break
 
-        return self.th_to_derivation(th, extract_from(th, bucket), verbose)
+        return self.th_to_derivation(th, extract_from(th, bucket), verbose=True)
 
 
     @staticmethod
