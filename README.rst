@@ -3,17 +3,24 @@
 FormalSystems
 =============
 
-A Python implementation of Douglas Hofstadter formal systems, from his book "Gödel, Escher, Bach".
+This is a Python implementation of *Douglas Hofstadter* formal systems, from his book *Gödel, Escher, Bach: An Eternal Golden Braid* (commonly *GEB*).
+
+In fact, you may define your *own formal systems* using a quite simple syntax, close to free text.
+Examples for *MIU*, *pg*, *fg* and *NDP* formal systems from the book are implemented in directory *definitions*. 
+
+A main Python script gives you possibilities to play with the formal system, including:
+
+- axiom schema support (iteration, decision procedure)
+- theorem step by step generation (using different algorithms)
+- theorem derivation
 
 
-Formal systems
-==============
-
-You may define your own formal systems using a quite simple syntax, close to free text.
-Examples for *MIU*, *pg*, *fg* and *NDP* formal systems from the book are implemented in directory *definitions*.
+------------------------
+Formal system definition
+------------------------
 
 Examples
---------
+========
 
 The *MIU* system may be define with:
 
@@ -36,46 +43,50 @@ The underlying syntax is YAML (see raw format). You can define one or several ax
 
 
 Syntax
-------
+======
 
 Axiom definitions should be formatted like this (*[]* means this is optional)::
 
     [def_1, [def_2, ...]] expr
 
 Where:
-  - *def_i* is an optional definition of "wildcard", using a regular expression, for example:
 
-    - ".*" may be anything including the empty string
-    - "-+" is a string composed of "-"
-    The definitions are written using ``char [is] regexp`` or ``char1 char2 [are] regexp`` if different wildcards have the same definition. Note that you should use only *one character* for wildcard definition.
-  - *expr* is the axiom expression
+- *def_i* is an optional definition of "wildcard", using a regular expression, for example:
+
+- ".*" may be anything including the empty string
+- "-+" is a string composed of "-"
+The definitions are written using ``char [is] regexp`` or ``char1 char2 [are] regexp`` if different wildcards have the same definition. Note that you should use only *one character* for wildcard definition.
+
+- *expr* is the axiom expression
 
 Rules for theorem production should be formatted like this::
 
     [def_1, [def_2, ...]] cond_1 [and cond_2 [and ...]] => th_1 [and th_2 [and ...]]
 
 Where:
-  - *def_i* is the same as before
-  - *cond_i* is a required theorem, in order to produce new theorems (separated by *and* if several conditions)
-  - *th_i* is a produced theorems with the rule
+
+- *def_i* is the same as before
+- *cond_i* is a required theorem, in order to produce new theorems (separated by *and* if several conditions)
+- *th_i* is a produced theorems with the rule
 
 
-
+------------
 Installation
-============
+------------
 
 
 Install with::
 
     % python setup.py install --user
 
-A script should be put in ~/.local/bin, make sure this path is in your $PATH::
+A script should be put in ``~/.local/bin``, make sure this path is in your ``$PATH``::
 
     % export PATH=$PATH:~/.local/bin
 
 
+-----
 Tests
-=====
+-----
 
 If installation is successful, run the tests with::
 
@@ -83,11 +94,12 @@ If installation is successful, run the tests with::
     % python test_formalsystems.py -v
 
 
+-----------
 Main script
-===========
+-----------
 
-After installation, you should have the main script *FormalSystemsMain.py* deployed somewhere where you *$PATH* points to, under the name *FormalSystems*.
-If it is not the case, you can always call the script directly, assuming the dependencies are properly installed (just *pyyaml* and *LEPL*).
+After installation, you should have the main script *FormalSystemsMain.py* deployed somewhere where you ``$PATH`` points to, under the name *FormalSystems*.
+If it is not the case, you can always execute the script directly, assuming the dependencies are properly installed (just *pyyaml* and *LEPL*).
 
 Usage of the main script is fully documented in *--help* argument. 
 
@@ -173,8 +185,9 @@ Options are available to display theorem derivation as well::
     [7 ]  (4) z is -+, z-SDz => Pz-                 for  -----SD----                gives  P-----
 
 
+----------
 Python API
-==========
+----------
 
 Some tests using *doctests*::
 
@@ -206,7 +219,7 @@ pg formal system::
     === BUCKET 2: -p--g---/--p-g---
     === BUCKET 3: -p---g----/--p--g----/---p-g----
 
-P formal system::
+NDP formal system::
 
     >>> fs = FormalSystem()
     >>> fs.read_formal_system('../definitions/NDP.yaml')
@@ -214,7 +227,7 @@ P formal system::
     === BUCKET 1: --NDP-
     === BUCKET 2: --NDP---/-SD--/P--
 
-Derivations::
+Successful derivation::
 
     >>> fs = FormalSystem()
     >>> fs.read_formal_system('../definitions/NDP.yaml')
@@ -224,7 +237,7 @@ Derivations::
     === Theorem P----- found, derivation:
     ...
 
-Derivations::
+Failed derivation::
 
     >>> fs = FormalSystem()
     >>> fs.read_formal_system('../definitions/MIU.yaml')
