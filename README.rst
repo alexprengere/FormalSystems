@@ -45,19 +45,20 @@ The underlying syntax is YAML (see raw format). You can define one or several ax
 Syntax
 ======
 
-Axiom definitions should be formatted like this (*[]* means this is optional)::
+Axiom definitions should be formatted like this (``[]`` means this is optional)::
 
     [def_1, [def_2, ...]] expr
 
 Where:
 
-- *def_i* is an optional definition of "wildcard", using a regular expression, for example:
+- ``def_i`` is an optional definition of *wildcard*, using a regular expression, for example:
 
-- ".*" may be anything including the empty string
-- "-+" is a string composed of "-"
+  - ".*" may be anything including the empty string
+  - "-+" is a string composed of "-"
+
 The definitions are written using ``char [is] regexp`` or ``char1 char2 [are] regexp`` if different wildcards have the same definition. Note that you should use only *one character* for wildcard definition.
 
-- *expr* is the axiom expression
+- ``expr`` is the axiom expression
 
 Rules for theorem production should be formatted like this::
 
@@ -65,9 +66,9 @@ Rules for theorem production should be formatted like this::
 
 Where:
 
-- *def_i* is the same as before
-- *cond_i* is a required theorem, in order to produce new theorems (separated by *and* if several conditions)
-- *th_i* is a produced theorems with the rule
+- ``def_i`` is the same as before
+- ``cond_i`` is a required theorem, in order to produce new theorems (separated by *and* if several conditions)
+- ``th_i`` is a produced theorems with the rule
 
 
 ------------
@@ -98,10 +99,10 @@ If installation is successful, run the tests with::
 Main script
 -----------
 
-After installation, you should have the main script *FormalSystemsMain.py* deployed somewhere where you ``$PATH`` points to, under the name *FormalSystems*.
+After installation, you should have the main script ``FormalSystemsMain.py`` deployed somewhere where you ``$PATH`` points to, under the name ``FormalSystems``.
 If it is not the case, you can always execute the script directly, assuming the dependencies are properly installed (just *pyyaml* and *LEPL*).
 
-Usage of the main script is fully documented in *--help* argument. 
+Usage of the main script is fully documented in ``--help`` argument. 
 
 You may generate theorems step by step if the number of axioms is finite::
 
