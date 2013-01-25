@@ -1,0 +1,239 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Formalsystems by alexprengere</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Formalsystems</h1>
+        <p>A Python implementation of Douglas Hofstadter formal systems</p>
+
+        <p class="view"><a href="https://github.com/alexprengere/FormalSystems">View the Project on GitHub <small>alexprengere/FormalSystems</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/alexprengere/FormalSystems/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/alexprengere/FormalSystems/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/alexprengere/FormalSystems">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>FormalSystems</h1>
+
+<p>This is a Python implementation of <em>Douglas Hofstadter</em> formal systems,
+from his book <em>Gödel, Escher, Bach: An Eternal Golden Braid</em> (commonly
+<em>GEB</em>).</p>
+
+<p>In fact, you may define your <em>own formal systems</em> using a quite simple
+syntax, close to free text. Examples for <em>MIU</em>, <em>pg</em>, <em>fg</em> and <em>NDP</em>
+formal systems from the book are implemented in directory <em>definitions</em>.</p>
+
+<p>A main Python script gives you possibilities to play with the formal
+system, including:</p>
+
+<ul>
+<li>  axiom schema support (iteration, decision procedure)</li>
+<li>  theorem step by step generation (using different algorithms)</li>
+<li>  theorem derivation</li>
+</ul><h2>Formal system definition</h2>
+
+<h3>Examples</h3>
+
+<p>The <em>MIU</em> system may be define with:</p>
+
+<pre><code>axioms:
+    -   MI
+
+rules:
+    -   x is .*, xI =&gt; xIU
+    -   x is .*, Mx =&gt; Mxx
+    -   x is .*, y is .*, xIIIy =&gt; xUy
+    -   x y .* , xUUy =&gt; xy
+</code></pre>
+
+<p>The underlying syntax is YAML (see raw format). You can define one or
+several axioms, or even an infinite number of axioms using a schema, as
+in the <em>pg</em> formal system:</p>
+
+<pre><code>axioms:
+    -   x is -+, xp-gx-
+
+rules:
+    -   x y z are -+, xpygz =&gt; xpy-gz-
+</code></pre>
+
+<h3>Syntax</h3>
+
+<p>Axiom definitions should be formatted like this (<code>[]</code> means this is
+optional):</p>
+
+<pre><code>[def_1, [def_2, ...]] expr
+</code></pre>
+
+<p>Where:</p>
+
+<ul>
+<li>
+<p><code>def_i</code> is an optional definition of <em>wildcard</em>, using a regular
+expression, for example:</p>
+
+<ul>
+<li>  ".*" may be anything including the empty string</li>
+<li>  "-+" is a string composed of "-"</li>
+</ul>
+</li>
+</ul><p>The definitions are written using <code>char [is] regexp</code> or
+<code>char1 char2 [are] regexp</code> if different wildcards have the same
+definition. Note that you should use only <em>one character</em> for wildcard
+definition.</p>
+
+<ul>
+<li>  <code>expr</code> is the axiom expression</li>
+</ul><p>Rules for theorem production should be formatted like this:</p>
+
+<pre><code>[def_1, [def_2, ...]] cond_1 [and cond_2 [and ...]] =&gt; th_1 [and th_2 [and ...]]
+</code></pre>
+
+<p>Where:</p>
+
+<ul>
+<li>  <code>def_i</code> is the same as before</li>
+<li>  <code>cond_i</code> is a required theorem, in order to produce new theorems
+(separated by <em>and</em> if several conditions)</li>
+<li>  <code>th_i</code> is a produced theorems with the rule</li>
+</ul><h2>Installation</h2>
+
+<p>Install with:</p>
+
+<pre><code>% python setup.py install --user
+</code></pre>
+
+<p>A script should be put in <code>~/.local/bin</code>, make sure this path is in your
+<code>$PATH</code>:</p>
+
+<pre><code>% export PATH=$PATH:~/.local/bin
+</code></pre>
+
+<h2>Tests</h2>
+
+<p>If installation is successful, run the tests with:</p>
+
+<pre><code>% cd tests
+% python test_formalsystems.py -v
+</code></pre>
+
+<h2>Main script</h2>
+
+<p>After installation, you should have the main script
+<code>FormalSystemsMain.py</code> deployed somewhere where you <code>$PATH</code> points to,
+under the name <code>FormalSystems</code>. If it is not the case, you can always
+execute the script directly, assuming the dependencies are properly
+installed (just <em>pyyaml</em> and <em>LEPL</em>).</p>
+
+<p>Usage of the main script is fully documented in <code>--help</code> argument.</p>
+
+<p>You may generate theorems step by step if the number of axioms is
+finite:</p>
+
+<pre><code>% FormalSystems definitions/MIU.yaml --iteration 3 
+&gt; Finite number of axioms, using step algorithm
+
+STEP 1: MI
+
+P  (1) x is .*, xI =&gt; xIU                    for  MI                         gives  MIU
+P  (2) x is .*, Mx =&gt; Mxx                    for  MI                         gives  MII
+.  (3) x is .*, y is .*, xIIIy =&gt; xUy        for  MI                       
+.  (4) x y  .* , xUUy =&gt; xy                  for  MI                       
+
+STEP 2: MIU/MII
+
+P  (1) x is .*, xI =&gt; xIU                    for  MII                        gives  MIIU
+.  (1) x is .*, xI =&gt; xIU                    for  MIU                      
+P  (2) x is .*, Mx =&gt; Mxx                    for  MII                        gives  MIIII
+P  (2) x is .*, Mx =&gt; Mxx                    for  MIU                        gives  MIUIU
+.  (3) x is .*, y is .*, xIIIy =&gt; xUy        for  MII                      
+.  (3) x is .*, y is .*, xIIIy =&gt; xUy        for  MIU                      
+.  (4) x y  .* , xUUy =&gt; xy                  for  MII                      
+.  (4) x y  .* , xUUy =&gt; xy                  for  MIU                      
+
+STEP 3: MIIU/MIIII/MIUIU
+</code></pre>
+
+<p>Or using a bucket where axioms are thrown and theorems computed
+iteratively if the number of axioms is infinite:</p>
+
+<pre><code>% FormalSystems definitions/pg.yaml --iteration 4
+&gt; Infinite number of axioms, using bucket algorithm
+
+[Adding -p-g-- to bucket]
+
+=== BUCKET 1: -p-g--
+
+P  (1) x y z are -+, xpygz =&gt; xpy-gz-        for  -p-g--                     gives  -p--g---
+[Adding --p-g--- to bucket]
+
+=== BUCKET 2: -p--g---/--p-g---
+
+P  (1) x y z are -+, xpygz =&gt; xpy-gz-        for  -p--g---                   gives  -p---g----
+P  (1) x y z are -+, xpygz =&gt; xpy-gz-        for  --p-g---                   gives  --p--g----
+[Adding ---p-g---- to bucket]
+
+=== BUCKET 3: -p---g----/--p--g----/---p-g----
+
+P  (1) x y z are -+, xpygz =&gt; xpy-gz-        for  -p---g----                 gives  -p----g-----
+P  (1) x y z are -+, xpygz =&gt; xpy-gz-        for  ---p-g----                 gives  ---p--g-----
+P  (1) x y z are -+, xpygz =&gt; xpy-gz-        for  --p--g----                 gives  --p---g-----
+[Adding ----p-g----- to bucket]
+
+=== BUCKET 4: -p----g-----/---p--g-----/--p---g-----/----p-g-----
+</code></pre>
+
+<p>Options are available to display theorem derivation as well:</p>
+
+<pre><code>% FormalSystems definitions/NDP.yaml --quiet --derivation P-----
+&gt; Infinite number of axioms, using bucket algorithm
+&gt; Rule with several parents, using recursivity
+
+=== BUCKET 1: --NDP-
+=== BUCKET 2: --NDP---/-SD--/P--
+=== BUCKET 3: --NDP-----/---SD--/---NDP--
+=== BUCKET 4: --NDP-------/---NDP-----/-----SD--/P---/---NDP-
+=== BUCKET 5: --NDP---------/---NDP--------/---NDP----/-------SD--/-----SD---/-SD---/----NDP---
+=== BUCKET 6: ---NDP-----------/----NDP-------/---NDP-------/--NDP-----------/---------SD--/----NDP-
+=== BUCKET 7: ----NDP-----------/----NDP-----/---NDP----------/---NDP--------------/--NDP-------------/-----------SD--/-------SD---/-SD----/----NDP--
+=== BUCKET 8: ----NDP---------/----NDP---------------/---NDP-------------/---NDP-----------------/--NDP---------------/----NDP------/-------------SD--/-------SD----/-----SD----/-----------SD---/-----NDP-
+=== BUCKET 9: --NDP-----------------/-----NDP------/----NDP-------------/---NDP--------------------/---NDP----------------/----NDP----------/----NDP-------------------/---------------SD--/-SD-----/-------------SD---/-----------SD----/P-----/-----NDP--
+
+=== Theorem P----- found, derivation:
+[1 ]  Axiom                                                                     gives  --NDP-              
+[2 ]  (1) x y are -+, xNDPy =&gt; xNDPxy           for  --NDP-                     gives  --NDP---            
+[3 ]  Axiom                                                                     gives  ---NDP--            
+[3 ]  (1) x y are -+, xNDPy =&gt; xNDPxy           for  --NDP---                   gives  --NDP-----          
+[4 ]  Axiom                                                                     gives  ----NDP-            
+[4 ]  (1) x y are -+, xNDPy =&gt; xNDPxy           for  ---NDP--                   gives  ---NDP-----         
+[4 ]  (2) z is -+, --NDPz =&gt; zSD--              for  --NDP-----                 gives  -----SD--           
+[5 ]  (1) x y are -+, xNDPy =&gt; xNDPxy           for  ----NDP-                   gives  ----NDP-----        
+[5 ]  (3) x z are -+, zSDx and x-NDPz =&gt; zSDx-  for  -----SD-- and ---NDP-----  gives  -----SD---          
+[6 ]  (3) x z are -+, zSDx and x-NDPz =&gt; zSDx-  for  -----SD--- and ----NDP-----  gives  -----SD----         
+[7 ]  (4) z is -+, z-SDz =&gt; Pz-                 for  -----SD----                gives  P-----
+</code></pre>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/alexprengere">alexprengere</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
