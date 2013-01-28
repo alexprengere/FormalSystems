@@ -5,11 +5,11 @@ from setuptools import setup
 
 setup(
     name='FormalSystems',
-    version='0.1',
+    version='0.1.2',
     description='Play with formal systems from "Gödel Escher Bach", Douglas Hofstadter',
     author='Alex Prengère',
     author_email='alexprengere@gmail.com',
-    url='https://github.com/alexprengere/FormalSystems',
+    url='http://alexprengere.github.com/FormalSystems',
     packages=[
         'formalsystems', 
     ],
