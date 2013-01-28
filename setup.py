@@ -8,7 +8,7 @@ setup(
     version='0.1',
     description='Play with formal systems from "Gödel Escher Bach", Douglas Hofstadter',
     author='Alex Prengère',
-    author_email='alex.prengere@gmail.com',
+    author_email='alexprengere@gmail.com',
     url='https://github.com/alexprengere/FormalSystems',
     packages=[
         'formalsystems', 
