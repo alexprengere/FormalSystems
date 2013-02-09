@@ -1,7 +1,10 @@
 
-=============
-FormalSystems
-=============
+=======================
+FormalSystems |travis|_
+=======================
+
+.. _travis : https://travis-ci.org/alexprengere/FormalSystems
+.. |travis| image:: https://api.travis-ci.org/alexprengere/FormalSystems.png
 
 This is a Python implementation of *Douglas Hofstadter* formal systems, from his book *Gödel, Escher, Bach: An Eternal Golden Braid* (commonly *GEB*).
 
