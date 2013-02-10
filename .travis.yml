@@ -11,4 +11,4 @@ notifications:
 install: "pip install -r requirements.txt --use-mirrors"
 
 # command to run tests
-script: nosetests
+script: "python tests/test_formalsystems.py -vv"
