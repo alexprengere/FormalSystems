@@ -31,11 +31,16 @@
         <h1>
 <a name="formalsystems" class="anchor" href="#formalsystems"><span class="octicon octicon-link"></span></a>FormalSystems</h1>
 
-<p>This is a Python implementation of <em>Douglas Hofstadter</em> formal systems, from his book <em>Gödel, Escher, Bach: An Eternal Golden Braid</em> (commonly <em>GEB</em>).</p>
+<p>This is a Python implementation of <em>Douglas Hofstadter</em> formal systems,
+from his book <em>Gödel, Escher, Bach: An Eternal Golden Braid</em> (commonly
+<em>GEB</em>).</p>
 
-<p>In fact, you may define your <em>own formal systems</em> using a quite simple syntax, close to free text. Examples for <em>MIU</em>, <em>pg</em>, <em>fg</em> and <em>NDP</em> formal systems from the book are implemented in directory <em>definitions</em>.</p>
+<p>In fact, you may define your <em>own formal systems</em> using a quite simple
+syntax, close to free text. Examples for <em>MIU</em>, <em>pg</em>, <em>fg</em> and <em>NDP</em>
+formal systems from the book are implemented in directory <em>definitions</em>.</p>
 
-<p>A main Python script gives you possibilities to play with the formal system, including:</p>
+<p>A main Python script gives you possibilities to play with the formal
+system, including:</p>
 
 <ul>
 <li>  axiom schema support (iteration, decision procedure)</li>
@@ -49,41 +54,32 @@
 
 <p>The <em>MIU</em> system may be define with:</p>
 
-<blockquote>
-<p>axioms:  </p>
+<div class="highlight highlight-YAML"><pre><span class="l-Scalar-Plain">axioms</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">MI</span>
 
-<ul>
-<li>  MI</li>
-</ul>
-<p>rules:  </p>
+<span class="l-Scalar-Plain">rules</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">x is .*, xI =&gt; xIU</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">x is .*, Mx =&gt; Mxx</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">x is .*, y is .*, xIIIy =&gt; xUy</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">x y  .* , xUUy =&gt; xy</span>
+</pre></div>
 
-<ul>
-<li>  x is .*, xI =&gt; xIU</li>
-<li>  x is .*, Mx =&gt; Mxx</li>
-<li>  x is .<em>, y is .</em>, xIIIy =&gt; xUy</li>
-<li>  x y .* , xUUy =&gt; xy</li>
-</ul>
-</blockquote>
+<p>The underlying syntax is YAML (see raw format). You can define one or
+several axioms, or even an infinite number of axioms using a schema, as
+in the <em>pg</em> formal system:</p>
 
-<p>The underlying syntax is YAML (see raw format). You can define one or several axioms, or even an infinite number of axioms using a schema, as in the <em>pg</em> formal system:</p>
+<div class="highlight highlight-YAML"><pre><span class="l-Scalar-Plain">axioms</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">x is -+, xp-gx-</span>
 
-<blockquote>
-<p>axioms:  </p>
-
-<ul>
-<li>  x is -+, xp-gx-</li>
-</ul>
-<p>rules:  </p>
-
-<ul>
-<li>  x y z are -+, xpygz =&gt; xpy-gz-</li>
-</ul>
-</blockquote>
+<span class="l-Scalar-Plain">rules</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">x y z are -+, xpygz =&gt; xpy-gz-</span>
+</pre></div>
 
 <h3>
 <a name="syntax" class="anchor" href="#syntax"><span class="octicon octicon-link"></span></a>Syntax</h3>
 
-<p>Axiom definitions should be formatted like this (<code>[]</code> means this is optional):</p>
+<p>Axiom definitions should be formatted like this (<code>[]</code> means this is
+optional):</p>
 
 <div class="highlight highlight-bash"><pre><span class="o">[</span>def_1, <span class="o">[</span>def_2, ...<span class="o">]]</span> expr
 </pre></div>
@@ -92,14 +88,18 @@
 
 <ul>
 <li>
-<p><code>def_i</code> is an optional definition of <em>wildcard</em>, using a regular expression, for example:</p>
+<p><code>def_i</code> is an optional definition of <em>wildcard</em>, using a regular
+expression, for example:</p>
 
 <ul>
 <li>  ".*" may be anything including the empty string</li>
 <li>  "-+" is a string composed of "-"</li>
 </ul>
 </li>
-</ul><p>The definitions are written using <code>char [is] regexp</code> or <code>char1 char2 [are] regexp</code> if different wildcards have the same definition. Note that you should use only <em>one character</em> for wildcard definition.</p>
+</ul><p>The definitions are written using <code>char [is] regexp</code> or
+<code>char1 char2 [are] regexp</code> if different wildcards have the same
+definition. Note that you should use only <em>one character</em> for wildcard
+definition.</p>
 
 <ul>
 <li>  <code>expr</code> is the axiom expression</li>
@@ -112,7 +112,8 @@
 
 <ul>
 <li>  <code>def_i</code> is the same as before</li>
-<li>  <code>cond_i</code> is a required theorem, in order to produce new theorems (separated by <em>and</em> if several conditions)</li>
+<li>  <code>cond_i</code> is a required theorem, in order to produce new theorems
+(separated by <em>and</em> if several conditions)</li>
 <li>  <code>th_i</code> is a produced theorems with the rule</li>
 </ul><h2>
 <a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
@@ -122,7 +123,8 @@
 <div class="highlight highlight-bash"><pre><span class="nv">$ </span>python setup.py install --user
 </pre></div>
 
-<p>A script should be put in <code>~/.local/bin</code>, make sure this path is in your <code>$PATH</code>:</p>
+<p>A script should be put in <code>~/.local/bin</code>, make sure this path is in your
+<code>$PATH</code>:</p>
 
 <div class="highlight highlight-bash"><pre><span class="nv">$ </span><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:~/.local/bin
 </pre></div>
@@ -139,11 +141,16 @@
 <h2>
 <a name="main-script" class="anchor" href="#main-script"><span class="octicon octicon-link"></span></a>Main script</h2>
 
-<p>After installation, you should have the main script <code>FormalSystemsMain.py</code> deployed somewhere where you <code>$PATH</code> points to, under the name <code>FormalSystems</code>. If it is not the case, you can always execute the script directly, assuming the dependencies are properly installed (just <em>pyyaml</em> and <em>LEPL</em>).</p>
+<p>After installation, you should have the main script
+<code>FormalSystemsMain.py</code> deployed somewhere where you <code>$PATH</code> points to,
+under the name <code>FormalSystems</code>. If it is not the case, you can always
+execute the script directly, assuming the dependencies are properly
+installed (just <em>pyyaml</em> and <em>LEPL</em>).</p>
 
 <p>Usage of the main script is fully documented in <code>--help</code> argument.</p>
 
-<p>You may generate theorems step by step if the number of axioms is finite:</p>
+<p>You may generate theorems step by step if the number of axioms is
+finite:</p>
 
 <div class="highlight highlight-bash"><pre><span class="nv">$ </span>FormalSystems definitions/MIU.yaml --iteration 3 
 &gt; Finite number of axioms, using step algorithm
@@ -169,7 +176,8 @@ P  <span class="o">(</span>2<span class="o">)</span> x is .*, <span class="nv">M
 STEP 3: MIIU/MIIII/MIUIU
 </pre></div>
 
-<p>Or using a bucket where axioms are thrown and theorems computed iteratively if the number of axioms is infinite:</p>
+<p>Or using a bucket where axioms are thrown and theorems computed
+iteratively if the number of axioms is infinite:</p>
 
 <div class="highlight highlight-bash"><pre><span class="nv">$ </span>FormalSystems definitions/pg.yaml --iteration 4
 &gt; Infinite number of axioms, using bucket algorithm
@@ -225,77 +233,6 @@ P  <span class="o">(</span>1<span class="o">)</span> x y z are -+, <span class="
 <span class="o">[</span>5 <span class="o">]</span>  <span class="o">(</span>3<span class="o">)</span> x z are -+, zSDx and x-NDPz <span class="o">=</span>&gt; zSDx-  <span class="k">for</span>  -----SD-- and ---NDP-----  gives  -----SD---          
 <span class="o">[</span>6 <span class="o">]</span>  <span class="o">(</span>3<span class="o">)</span> x z are -+, zSDx and x-NDPz <span class="o">=</span>&gt; zSDx-  <span class="k">for</span>  -----SD--- and ----NDP-----  gives  -----SD----         
 <span class="o">[</span>7 <span class="o">]</span>  <span class="o">(</span>4<span class="o">)</span> z is -+, z-SDz <span class="o">=</span>&gt; Pz-                 <span class="k">for</span>  -----SD----                gives  P-----
-</pre></div>
-
-<h2>
-<a name="python-api" class="anchor" href="#python-api"><span class="octicon octicon-link"></span></a>Python API</h2>
-
-<p>Some tests using <em>doctests</em>:</p>
-
-<div class="highlight highlight-python"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">formalsystems.formalsystems</span> <span class="kn">import</span> <span class="n">FormalSystem</span><span class="p">,</span> <span class="n">Theorem</span>
-</pre></div>
-
-<p>MIU formal system:</p>
-
-<div class="highlight highlight-python"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">fs</span> <span class="o">=</span> <span class="n">FormalSystem</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">fs</span><span class="o">.</span><span class="n">read_formal_system</span><span class="p">(</span><span class="s">'../definitions/MIU.yaml'</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">apply_rules_step</span><span class="p">(</span><span class="n">fs</span><span class="o">.</span><span class="n">iterate_over_schema</span><span class="p">(),</span> <span class="n">step</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-<span class="n">STEP</span> <span class="mi">1</span><span class="p">:</span> <span class="n">MI</span>
-<span class="n">STEP</span> <span class="mi">2</span><span class="p">:</span> <span class="n">MIU</span><span class="o">/</span><span class="n">MII</span>
-<span class="n">STEP</span> <span class="mi">3</span><span class="p">:</span> <span class="n">MIIU</span><span class="o">/</span><span class="n">MIIII</span><span class="o">/</span><span class="n">MIUIU</span>
-<span class="n">STEP</span> <span class="mi">4</span><span class="p">:</span> <span class="n">MIIIIU</span><span class="o">/</span><span class="n">MIIIIIIII</span><span class="o">/</span><span class="n">MIIUIIU</span><span class="o">/</span><span class="n">MIUIUIUIU</span><span class="o">/</span><span class="n">MIU</span><span class="o">/</span><span class="n">MUI</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">fs</span><span class="o">.</span><span class="n">iterate_over_schema</span><span class="p">()]</span>
-<span class="p">[</span><span class="s">'MI'</span><span class="p">]</span>
-</pre></div>
-
-<p>pg formal system:</p>
-
-<div class="highlight highlight-python"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">fs</span> <span class="o">=</span> <span class="n">FormalSystem</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">fs</span><span class="o">.</span><span class="n">read_formal_system</span><span class="p">(</span><span class="s">'../definitions/pg.yaml'</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">apply_rules_bucket_till</span><span class="p">(</span><span class="n">fs</span><span class="o">.</span><span class="n">iterate_over_schema</span><span class="p">(),</span> <span class="n">max_turns</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-<span class="o">===</span> <span class="n">BUCKET</span> <span class="mi">1</span><span class="p">:</span> <span class="o">-</span><span class="n">p</span><span class="o">-</span><span class="n">g</span><span class="o">--</span>
-<span class="o">===</span> <span class="n">BUCKET</span> <span class="mi">2</span><span class="p">:</span> <span class="o">-</span><span class="n">p</span><span class="o">--</span><span class="n">g</span><span class="o">---/--</span><span class="n">p</span><span class="o">-</span><span class="n">g</span><span class="o">---</span>
-<span class="o">===</span> <span class="n">BUCKET</span> <span class="mi">3</span><span class="p">:</span> <span class="o">-</span><span class="n">p</span><span class="o">---</span><span class="n">g</span><span class="o">----/--</span><span class="n">p</span><span class="o">--</span><span class="n">g</span><span class="o">----/---</span><span class="n">p</span><span class="o">-</span><span class="n">g</span><span class="o">----</span>
-<span class="o">===</span> <span class="n">BUCKET</span> <span class="mi">4</span><span class="p">:</span> <span class="o">-</span><span class="n">p</span><span class="o">----</span><span class="n">g</span><span class="o">-----/---</span><span class="n">p</span><span class="o">--</span><span class="n">g</span><span class="o">-----/--</span><span class="n">p</span><span class="o">---</span><span class="n">g</span><span class="o">-----/----</span><span class="n">p</span><span class="o">-</span><span class="n">g</span><span class="o">-----</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">apply_rules_bucket_till</span><span class="p">(</span><span class="n">fs</span><span class="o">.</span><span class="n">iterate_over_schema</span><span class="p">(),</span> <span class="n">min_len</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-<span class="o">===</span> <span class="n">BUCKET</span> <span class="mi">1</span><span class="p">:</span> <span class="o">-</span><span class="n">p</span><span class="o">-</span><span class="n">g</span><span class="o">--</span>
-<span class="o">===</span> <span class="n">BUCKET</span> <span class="mi">2</span><span class="p">:</span> <span class="o">-</span><span class="n">p</span><span class="o">--</span><span class="n">g</span><span class="o">---/--</span><span class="n">p</span><span class="o">-</span><span class="n">g</span><span class="o">---</span>
-<span class="o">===</span> <span class="n">BUCKET</span> <span class="mi">3</span><span class="p">:</span> <span class="o">-</span><span class="n">p</span><span class="o">---</span><span class="n">g</span><span class="o">----/--</span><span class="n">p</span><span class="o">--</span><span class="n">g</span><span class="o">----/---</span><span class="n">p</span><span class="o">-</span><span class="n">g</span><span class="o">----</span>
-</pre></div>
-
-<p>NDP formal system:</p>
-
-<div class="highlight highlight-python"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">fs</span> <span class="o">=</span> <span class="n">FormalSystem</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">fs</span><span class="o">.</span><span class="n">read_formal_system</span><span class="p">(</span><span class="s">'../definitions/NDP.yaml'</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">apply_rules_bucket_till</span><span class="p">(</span><span class="n">fs</span><span class="o">.</span><span class="n">iterate_over_schema</span><span class="p">(),</span> <span class="n">max_turns</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">full</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-<span class="o">===</span> <span class="n">BUCKET</span> <span class="mi">1</span><span class="p">:</span> <span class="o">--</span><span class="n">NDP</span><span class="o">-</span>
-<span class="o">===</span> <span class="n">BUCKET</span> <span class="mi">2</span><span class="p">:</span> <span class="o">--</span><span class="n">NDP</span><span class="o">---/-</span><span class="n">SD</span><span class="o">--/</span><span class="n">P</span><span class="o">--</span>
-</pre></div>
-
-<p>Successful derivation:</p>
-
-<div class="highlight highlight-python"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">fs</span> <span class="o">=</span> <span class="n">FormalSystem</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">fs</span><span class="o">.</span><span class="n">read_formal_system</span><span class="p">(</span><span class="s">'../definitions/NDP.yaml'</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">derivation_asc</span><span class="p">(</span><span class="n">fs</span><span class="o">.</span><span class="n">iterate_over_schema</span><span class="p">(),</span> <span class="n">Theorem</span><span class="p">(</span><span class="s">'P-----'</span><span class="p">),</span> <span class="n">full</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">max_turns</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="o">&lt;</span><span class="n">BLANKLINE</span><span class="o">&gt;</span>
-<span class="o">...</span>
-<span class="o">===</span> <span class="n">Theorem</span> <span class="n">P</span><span class="o">-----</span> <span class="n">found</span><span class="p">,</span> <span class="n">derivation</span><span class="p">:</span>
-<span class="o">...</span>
-</pre></div>
-
-<p>Failed derivation:</p>
-
-<div class="highlight highlight-python"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">fs</span> <span class="o">=</span> <span class="n">FormalSystem</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">fs</span><span class="o">.</span><span class="n">read_formal_system</span><span class="p">(</span><span class="s">'../definitions/MIU.yaml'</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">derivation_step</span><span class="p">(</span><span class="n">fs</span><span class="o">.</span><span class="n">iterate_over_schema</span><span class="p">(),</span> <span class="n">Theorem</span><span class="p">(</span><span class="s">'MIUIU'</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="o">&lt;</span><span class="n">BLANKLINE</span><span class="o">&gt;</span>
-<span class="o">...</span>
-<span class="o">===</span> <span class="n">Theorem</span> <span class="n">MIUIU</span> <span class="n">found</span><span class="p">,</span> <span class="n">derivation</span><span class="p">:</span>
-<span class="o">...</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">derivation_step</span><span class="p">(</span><span class="n">fs</span><span class="o">.</span><span class="n">iterate_over_schema</span><span class="p">(),</span> <span class="n">Theorem</span><span class="p">(</span><span class="s">'MU'</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="o">&lt;</span><span class="n">BLANKLINE</span><span class="o">&gt;</span>
-<span class="o">...</span>
-<span class="o">===</span> <span class="n">Theorem</span> <span class="n">MU</span> <span class="ow">not</span> <span class="n">found</span>
 </pre></div>
       </section>
       <footer>
