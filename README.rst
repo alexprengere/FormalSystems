@@ -1,4 +1,3 @@
-
 =======================
 FormalSystems |travis|_
 =======================
@@ -27,7 +26,7 @@ Examples
 
 The *MIU* system may be define with:
 
-.. code-block:: yaml
+.. code-block:: YAML
 
     axioms:
         - MI
@@ -40,7 +39,7 @@ The *MIU* system may be define with:
 
 The underlying syntax is YAML (see raw format). You can define one or several axioms, or even an infinite number of axioms using a schema, as in the *pg* formal system:
 
-.. code-block:: yaml
+.. code-block:: YAML
 
     axioms:
         - x is -+, xp-gx-
