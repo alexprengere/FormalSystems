@@ -26,7 +26,7 @@ Examples
 
 The *MIU* system may be define with:
 
-.. code-block:: YAML
+.. code-block:: yaml
 
     axioms:
         - MI
@@ -39,7 +39,7 @@ The *MIU* system may be define with:
 
 The underlying syntax is YAML (see raw format). You can define one or several axioms, or even an infinite number of axioms using a schema, as in the *pg* formal system:
 
-.. code-block:: YAML
+.. code-block:: yaml
 
     axioms:
         - x is -+, xp-gx-
@@ -114,7 +114,7 @@ Main script
 After installation, you should have the main script ``FormalSystemsMain.py`` deployed somewhere where you ``$PATH`` points to, under the name ``FormalSystems``.
 If it is not the case, you can always execute the script directly, assuming the dependencies are properly installed (just *pyyaml* and *LEPL*).
 
-Usage of the main script is fully documented in ``--help`` argument. 
+Usage of the main script is fully documented in ``--help`` argument.
 
 You may generate theorems step by step if the number of axioms is finite:
 

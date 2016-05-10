@@ -11,10 +11,10 @@ setup(
     author_email='alexprengere@gmail.com',
     url='http://alexprengere.github.com/FormalSystems',
     packages=[
-        'formalsystems', 
+        'formalsystems',
     ],
     py_modules=[
-        'FormalSystemsMain' 
+        'FormalSystemsMain',
     ],
     install_requires=[
         'lepl',
