@@ -219,7 +219,7 @@ MIU formal system:
 .. code-block:: python
 
  >>> fs = FormalSystem()
- >>> fs.read_formal_system('../definitions/MIU.yaml')
+ >>> fs.read_formal_system('./definitions/MIU.yaml')
  >>> r = fs.apply_rules_step(fs.iterate_over_schema(), step=4, verbose=False)
  STEP 1: MI
  STEP 2: MIU/MII
@@ -233,7 +233,7 @@ pg formal system:
 .. code-block:: python
 
  >>> fs = FormalSystem()
- >>> fs.read_formal_system('../definitions/pg.yaml')
+ >>> fs.read_formal_system('./definitions/pg.yaml')
  >>> r = fs.apply_rules_bucket_till(fs.iterate_over_schema(), max_turns=4, verbose=False)
  === BUCKET 1: -p-g--
  === BUCKET 2: -p--g---/--p-g---
@@ -249,7 +249,7 @@ NDP formal system:
 .. code-block:: python
 
  >>> fs = FormalSystem()
- >>> fs.read_formal_system('../definitions/NDP.yaml')
+ >>> fs.read_formal_system('./definitions/NDP.yaml')
  >>> r = fs.apply_rules_bucket_till(fs.iterate_over_schema(), max_turns=2, full=True, verbose=False)
  === BUCKET 1: --NDP-
  === BUCKET 2: --NDP---/-SD--/P--
@@ -259,7 +259,7 @@ Successful derivation:
 .. code-block:: python
 
  >>> fs = FormalSystem()
- >>> fs.read_formal_system('../definitions/NDP.yaml')
+ >>> fs.read_formal_system('./definitions/NDP.yaml')
  >>> r = fs.derivation_asc(fs.iterate_over_schema(), Theorem('P-----'), full=True, max_turns=10)
  <BLANKLINE>
  ...
@@ -271,7 +271,7 @@ Failed derivation:
 .. code-block:: python
 
  >>> fs = FormalSystem()
- >>> fs.read_formal_system('../definitions/MIU.yaml')
+ >>> fs.read_formal_system('./definitions/MIU.yaml')
  >>> r = fs.derivation_step(fs.iterate_over_schema(), Theorem('MIUIU'), step=5)
  <BLANKLINE>
  ...

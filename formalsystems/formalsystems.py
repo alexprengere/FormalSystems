@@ -164,10 +164,9 @@ class AxiomsSchema(object):
 
             yield check_consistency(self.aliases, m)
 
-
     def is_axiom(self, theorem, verbose=True):
         for c in self._is_axiom(theorem):
-            if c is None: # No match or inconsistency in aliases
+            if c is None:  # No match or inconsistency in aliases
                 if verbose:
                     print 'N  %-10s *is not* an axiom [%s]' % \
                         (theorem, self)
@@ -178,7 +177,6 @@ class AxiomsSchema(object):
                 return True
         return False
 
-
     def iterate_over_schema(self):
         if not self.wildcards:
             # Simple axiom, no schema
@@ -186,9 +184,7 @@ class AxiomsSchema(object):
         else:
             # Clever iteration over wildcards in schema
             for r in iterate_over_wildcard(self.wildcards):
-                #print schema, r, wildcards
                 yield Theorem(self.schema % r)
-
 
 
 class Theorem(object):
@@ -268,7 +264,6 @@ class Rule(object):
             for nth in self.newts:
                 yield Theorem(nth % c, parents=t_ths, p_rule=self)
 
-
     def produce(self, ths, old_ths=None, verbose=True):
         n = len(self.oldts)
 
@@ -306,7 +301,7 @@ class Rule(object):
         # Note that product will give "same theorem tuple",
         # like (1, 1) as a part of the cartesian product of [1, 2, 3]
         for t_ths in set(product(*repeat(old_ths | ths, n))) - \
-                     set(product(*repeat(old_ths, n))):
+                set(product(*repeat(old_ths, n))):
 
             yield t_ths
 
@@ -415,7 +410,6 @@ class FormalSystem(object):
                 print
 
             bucket.add(ax)
-            #print bucket
             yield turn, bucket
 
             if verbose:
@@ -447,7 +441,8 @@ class FormalSystem(object):
             min_len = float('inf')
 
         # Test if one element has length > min_len
-        has_min_len = lambda t: len(t) >= min_len
+        def has_min_len(t):
+            return len(t) >= min_len
 
         bucket_gen = self._apply_rules_bucket(ths, full, verbose)
 

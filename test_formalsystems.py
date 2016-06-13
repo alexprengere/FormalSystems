@@ -40,7 +40,7 @@ if __name__ == '__main__':
     tests.addTests(unittest.makeSuite(TestFormalSystems))
     tests.addTests(doctest.DocTestSuite(formalsystems))
     tests.addTests(doctest.DocTestSuite(leplparsing))
-    tests.addTests(doctest.DocFileSuite('../README.rst',
+    tests.addTests(doctest.DocFileSuite('./README.rst',
                                         module_relative=False,
                                         optionflags=flags))
 

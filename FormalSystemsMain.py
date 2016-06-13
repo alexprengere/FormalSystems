@@ -71,14 +71,14 @@ def main():
     if args.theorem is None:
         if infinite_axioms:
             fs.apply_rules_bucket_till(fs.iterate_over_schema(),
-                                       min_len=None, # wont apply
+                                       min_len=None,  # wont apply
                                        max_turns=args.iteration,
                                        full=and_in_rule,
                                        verbose=not(args.quiet))
         else:
-            _ = fs.apply_rules_step(fs.iterate_over_schema(),
-                                    step=args.iteration,
-                                    verbose=not(args.quiet))
+            fs.apply_rules_step(fs.iterate_over_schema(),
+                                step=args.iteration,
+                                verbose=not(args.quiet))
     else:
         if infinite_axioms:
             fs.derivation_asc(fs.iterate_over_schema(),

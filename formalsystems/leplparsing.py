@@ -4,7 +4,7 @@
 import operator
 from collections import defaultdict
 
-from lepl import * # noqa
+from lepl import *  # noqa
 import lepl
 
 
@@ -43,14 +43,15 @@ def reg_to_lex(conditions, wildcards):
 # to return empty string matches,
 # so filtering matches through a custom
 # function like this seems to fix the problem
-join = lambda args: ''.join(args)
+def join(args):
+    return ''.join(args)
 
 def make_token(alias, reg):
     if reg[-1] in '*+':
         s, wildcard = reg[:-1], reg[-1]
         if wildcard == '+':
             rep = 1
-        else: # wildcard is *
+        else:  # wildcard is *
             rep = 0
         if s == '.':
             return (Any()[rep:, ...] > join) > alias

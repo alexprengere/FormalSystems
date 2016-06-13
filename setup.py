@@ -26,9 +26,9 @@ setup(
         ]
     },
     # We do not export YAML definitions with sources when installing
-    #package_data={'formalsystems': ['example_definitions/*.yaml']},
-    #package_dir={'mypkg': 'src/mypkg'},
-    #data_files=[
-    #    ('/etc/init.d', ['init-script'])
-    #]
+    # package_data={'formalsystems': ['example_definitions/*.yaml']},
+    # package_dir={'mypkg': 'src/mypkg'},
+    # data_files=[
+    #     ('/etc/init.d', ['init-script'])
+    # ]
 )

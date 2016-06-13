@@ -66,7 +66,7 @@ class OrderedSet(collections.MutableSet):
         return set(self) == set(other)
 
     def __del__(self):
-        self.clear() # remove circular references
+        self.clear()  # remove circular references
 
 
 if __name__ == '__main__':
