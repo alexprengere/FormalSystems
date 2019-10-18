@@ -1,2 +1,2 @@
-PyYAML==3.10
+PyYAML==5.1
 LEPL==5.1.3
